@@ -9,7 +9,7 @@ export default class Container extends Component {
     this.state = {
       treasures: {},
     };
-    this.addMyTreasure = this.addMyTreasure.bind(this);
+    // this.addMyTreasure = this.addMyTreasure.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -18,7 +18,7 @@ export default class Container extends Component {
     }
   }
 
-  getDragonTreasure() {
+  getDragonTreasure = () => {
     // axios GET to /api/treasure/dragon here
     axios.get('/api/treasure/dragon').then(res => {
       this.setState({
@@ -32,9 +32,18 @@ export default class Container extends Component {
 
   getAllTreasure() {
     // axios GET to /api/treasure/all here
+    axios.get('/api/treasure/all').then(res => {
+      console.log(res.data)
+      this.setState({
+        treasures: {
+          ...this.state.treasures,
+          all: res.data
+        }
+      })
+    }).catch(err => alert(err.response.request.response))
   }
 
-  getMyTreasure() {
+  getMyTreasure = () => {
     // axios GET to /api/treasure/user here
     axios.get('/api/treasure/user').then(treasure => {
       this.setState({
@@ -46,7 +55,7 @@ export default class Container extends Component {
     }).catch(err => alert(err.response.request.response))
   }
 
-  addMyTreasure(newMyTreasure) {
+  addMyTreasure = (newMyTreasure) => {
     this.setState({
       treasures: {
         ...this.state.treasures,
